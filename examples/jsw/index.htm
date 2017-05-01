@@ -1,0 +1,44 @@
+<html>
+	<head>
+		<link href="canvas.css" rel="stylesheet" type="text/css">
+	</head>
+
+	<body onload="SGXPrepare_OS();">
+		<div class="title container">
+			<h1>Jet Set Willy - Map viewer</h1>
+		</div>
+
+		<canvas id="SGXCanvas" width="200" height="200">
+			This browser does not support the HTML5 Canvas.
+		</canvas>
+
+		<script type="text/javascript" src="//sgxengine.com/code/lib/js/jquery/jquery-1.11.1.min.js"></script>
+		<script type="text/javascript" src="//sgxengine.com/code/jpjs/jquery.jplayer.min.js"></script>
+		<script type='text/javascript' src='//sgxengine.com/code/sgx/sgx-3.1.15.min.js'></script>
+		<script type="text/javascript" src="//sgxengine.com/code/sgx/lib/imgur-1.00.js"></script>
+
+	    <script type="text/javascript" src="//sgxengine.com/code/lib/js/zxjavascript/zxspectrum-0.1.js"></script>
+
+        <script type='text/javascript' src='js/snapshot.js'></script>
+        <script type='text/javascript' src='js/game.js'></script>
+        <script type='text/javascript' src='js/room.js'></script>
+        <script type='text/javascript' src='js/item.js'></script>
+        <script type='text/javascript' src='js/conveyor.js'></script>
+        <script type='text/javascript' src='js/ramp.js'></script>
+        <script type='text/javascript' src='js/guardian.js'></script>
+        <script type='text/javascript' src='js/guardian_vertical.js'></script>
+        <script type='text/javascript' src='js/guardian_horizontal.js'></script>
+        <script type='text/javascript' src='js/guardian_rope.js'></script>
+
+        <script type='text/javascript' src='mapview.js'></script>
+
+		<div class="button container">
+			<a href="#" class='button block' id="uiPause" onclick="return gVars.jsw.pauseToggle(this);">Pause</a>
+			<a href="#" class='button block' onclick="return changeRoom(JSWGame.LEFT);">Left</a>
+			<a href="#" class='button block' onclick="return changeRoom(JSWGame.ABOVE);">Up</a>
+			<a href="#" class='button block' onclick="return changeRoom(JSWGame.BELOW);">Down</a>
+			<a href="#" class='button block' onclick="return changeRoom(JSWGame.RIGHT);">Right</a>
+		</div>
+
+	</body>
+</html>

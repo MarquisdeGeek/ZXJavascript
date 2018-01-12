@@ -126,6 +126,7 @@ zx.spectrum = function(surface, scale) {
 	this.screen = new zx.screen(this);
 	this.audio = new zx.audio(this);
 
+	this.inputList = [];
 }
 
 zx.spectrum.prototype.cls = function() {
@@ -159,12 +160,41 @@ zx.spectrum.prototype.getCharacterTexture = function(chr) {
 	return this.font[chr];
 }
 
+zx.spectrum.prototype.inputAt = function(y, x, placeholder) {
+	var widget = new zx.input(y, x, placeholder);
+	this.inputList.push(widget);
+
+	var self = this;
+	$(widget).on('tab', function(e, text) {
+		// Find the next input
+		var tabbed_input = undefined;
+		var get_next = false;
+		for(var widget=0;widget<self.inputList.length;++widget) {
+			if (self.inputList[widget] == e.target) {
+				get_next = true;
+			} else if (get_next) {
+				tabbed_input = self.inputList[widget];
+				break;
+			}
+		}
+
+		// Wrap around?
+		if (!tabbed_input && self.inputList.length) {
+			tabbed_input = self.inputList[0];
+		}
+
+		// Does it exist?
+		if (tabbed_input) {
+			tabbed_input.focus();
+		}
+		return false;
+	});
+	return widget;
+}
 
 zx.spectrum.prototype.drawCharacter = function(chr, attr, x, y) {
 	return this.drawWith(this.getCharacterTexture(chr), attr, x, y);
 }
-
-
 
 zx.spectrum.prototype.drawWith = function(gfx, attr, x, y) {
 	if (gfx === undefined || attr === undefined) {
@@ -199,6 +229,16 @@ zx.spectrum.prototype.draw = function(surface) {
 	this.surface.setClipRect(NULL);
 	for(var i=0;i<4;++i) {
 		this.surface.fillRect(this.border[i]);
+	}
+
+	this.drawWidgets();
+}
+
+zx.spectrum.prototype.drawWidgets = function(surface) {
+	this.surface.setClipRect(NULL);
+
+	for(var widget=0;this.inputList && widget<this.inputList.length;++widget) {
+		this.inputList[widget].draw(surface);
 	}
 }
 
@@ -249,6 +289,11 @@ zx.spectrum.prototype.update = function(telaps) {
 		this.timecum -= flash_speed;
 		this.flashPulse = !this.flashPulse;
 	}
+
+	for(var widget=0;widget<this.inputList.length;++widget) {
+		this.inputList[widget].update(telaps);
+	}
+
 }
 
 zx.spectrum.prototype.getRGB = function(index, bright) {

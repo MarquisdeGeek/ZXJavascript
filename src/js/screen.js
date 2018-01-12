@@ -27,31 +27,34 @@ zx.screen.prototype.drawWith = function(gfx, attr, x, y) {
 };
 
 zx.screen.prototype.setAttribute = function(attr, x, y) {
-if (typeof (attr) === 'zx.attribute') {
-this.afile[x + y*32] = attr;
-} else {
-this.afile[x + y*32] = new zxAttribute(attr);
-}
-
+	if (typeof (attr) === 'zx.attribute') {
+		this.afile[x + y*32] = attr;
+	} else {
+		this.afile[x + y*32] = new zxAttribute(attr);
+	}
 }
 
 zx.screen.prototype.setScreen = function(chr, x, y) {
-this.scrfile[x + y*32] = chr;
+	this.scrfile[x + y*32] = chr;
 }
 
 
 zx.screen.prototype.cls = function() {
-this.system.cls();
+	this.system.cls();
 
-for(var y=0;y<24;++y) {
-for(var x=0;x<24;++x) {
-this.setAttribute(new zxAttribute(0x7), x, y);
-this.setScreen(' ', x, y);
-}
-}
+	var a = new zxAttribute();
+	a.setPaper(this.currentAttribute.paper);
 
-this.lastX = this.lastY = 0;
-this.lastPrintX = this.lastPrintY = 0;
+	for(var y=0;y<24;++y) {
+		for(var x=0;x<32;++x) {
+			this.setAttribute(a, x, y);
+			this.setScreen(' ', x, y);
+			this.system.drawCharacter(32, a, x*8, y*8);
+		}
+	}
+
+	this.lastX = this.lastY = 0;
+	this.lastPrintX = this.lastPrintY = 0;
 }
 
 

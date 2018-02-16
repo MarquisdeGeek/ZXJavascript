@@ -7,9 +7,12 @@ zx.chr$ = function(code) {
 	return sgxToCharacter(code);
 }
 
+zx.inkey = function() {
+	return zx.lastInkey;
+}
+
 zx.inkey$ = function() {
-// @todo
-	return "";
+	return zx.chr$(zx.lastInkey);
 }
 
 zx.len = function(v) {

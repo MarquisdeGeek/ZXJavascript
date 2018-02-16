@@ -169,6 +169,12 @@ zx.zxbase.prototype.circle = function(x, y, r) {
 
 
 zx.zxbase.prototype.update = function(telaps) {
+	zx.lastInkey = undefined;
+	for(var k=8;k<128;++k) {
+   		if (sgx.input.Engine.get().isKeyboardKeyPressed(k)) {
+   			zx.lastInkey = k;
+		}
+	}
 }
 
 zx.zxbase.prototype.getRGB = function(index, bright) {}

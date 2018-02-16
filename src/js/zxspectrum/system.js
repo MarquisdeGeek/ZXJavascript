@@ -128,6 +128,7 @@ zx.spectrum = function(surface, scale) {
 
 	this.inputList = [];
 }
+Inheritance_Manager.extend(zx.spectrum, zx.zxbase);
 
 zx.spectrum.prototype.cls = function() {
 	this.surface.setFillColor(this.getRGB(zx.spectrum.WHITE));
@@ -283,6 +284,7 @@ zx.spectrum.prototype.circle = function(x, y, r) {
 
 
 zx.spectrum.prototype.update = function(telaps) {
+
 	var flash_speed = 0.5;
 	this.timecum += telaps;
 	if (this.timecum > flash_speed) {
@@ -294,6 +296,7 @@ zx.spectrum.prototype.update = function(telaps) {
 		this.inputList[widget].update(telaps);
 	}
 
+	zx.zxbase.prototype.update(telaps);
 }
 
 zx.spectrum.prototype.getRGB = function(index, bright) {

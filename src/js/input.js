@@ -7,6 +7,7 @@ zx.input = function(y, x, placeholder) {
 	this.y = y;
 	this.text = "";
 	this.maxlength = 12;
+	this.visible = true;
 	this.focused = false;
 	this.password = false;
 	this.surround = true;
@@ -28,6 +29,14 @@ zx.input.prototype.focus = function() {
 
 zx.input.prototype.unfocus = function() {
 	this.focused = false;
+}
+
+zx.input.prototype.show = function() {
+	this.visible = true;
+}
+
+zx.input.prototype.hide = function() {
+	this.visible = false;
 }
 
 zx.input.prototype.onClick = function(mx, my) {
@@ -117,6 +126,10 @@ zx.input.prototype.updateKeyscan = function() {
 
 
 zx.input.prototype.draw = function() {
+	if (!this.visible) {
+		return;
+	}
+
 	this.drawText();
 
 	if (this.surround) {
@@ -193,6 +206,10 @@ zx.input.prototype.isInside = function(screenx, screeny) {
 
 
 zx.input.prototype.update = function(telaps) {
+	if (!this.visible) {
+		return;
+	}
+
 	if (sgx.input.Engine.get().mouseLeft.m_bPressed) {
 		this.onClick(sgx.input.Engine.get().getMouseX(), sgx.input.Engine.get().getMouseY());
 	}
